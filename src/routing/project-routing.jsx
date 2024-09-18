@@ -8,7 +8,7 @@ export const ProjectRouting = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" index element={<Layout />} />
+        <Route path="/" index element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
       </Routes>

@@ -1,0 +1,10 @@
+{
+  "appId": "com.spegi.app",
+  "appName": "spegi-app",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

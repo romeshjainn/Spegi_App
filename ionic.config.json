@@ -1,0 +1,7 @@
+{
+  "name": "spegi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
