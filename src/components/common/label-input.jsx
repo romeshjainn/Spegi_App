@@ -6,6 +6,7 @@ export const LabelInput = ({
   inputHandler,
   lengthLimit,
   value,
+  readonly,
 }) => {
   return (
     <div className=" flex flex-col gap-2">
@@ -23,6 +24,7 @@ export const LabelInput = ({
         }}
         maxLength={lengthLimit}
         value={value}
+        readOnly={readonly}
       />
     </div>
   );

@@ -1,15 +1,50 @@
-import { Footer } from "../../components/common/footer";
+import { DetailsCard } from "../../components/home/detailsCard";
 
 const Home = () => {
   return (
-    <div className="h-screen p-6 pt-6 flex flex-col justify-between">
+    <div className=" flex flex-col justify-between">
       <main className="h-full">
-        <section className="py-3">
-          <h2 className="text-[3vh] text-[#6c6565] font-medium">Hello</h2>
-          <p className="text-[4vh] font-semibold">Romesh Jain</p>
+        <section className="py-3 flex items-center justify-between mr-4">
+          <div>
+            <h2 className="text-[3vh] text-[#6c6565] font-medium">Hello</h2>
+            <p className="text-[4vh] font-semibold">Romesh Jain</p>
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="size-8 text-gray-800"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.25 9a6.75 6.75 0 0 1 13.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 0 1-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 1 1-7.48 0 24.585 24.585 0 0 1-4.831-1.244.75.75 0 0 1-.298-1.205A8.217 8.217 0 0 0 5.25 9.75V9Zm4.502 8.9a2.25 2.25 0 1 0 4.496 0 25.057 25.057 0 0 1-4.496 0Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </section>
+        <div className="mb-6 mt-2 px-4 p-2 flex items-center justify-center border-y-[.1111px] min-h-[100px] rounded-xl bg-primary border-gray-700 py-3">
+          <h2 className="text-[2.4vh] text-start text-white font-semibold">
+            Rk College Of Technologies & Management
+          </h2>
+        </div>
+
+        <section className="flex flex-col gap-5 mt-4 h-full">
+          <DetailsCard navigateTo="/income" label={"Income"} bgColor={""} />
+          <DetailsCard
+            navigateTo="/expense"
+            label={"Expense"}
+            bgColor={""}
+            iconColor={"red"}
+          />
+          <DetailsCard navigateTo="/enquiry" label={"Enquiry"} bgColor={""} />
+          <DetailsCard
+            navigateTo="/admissions"
+            label={"Admissions"}
+            bgColor={""}
+          />
         </section>
 
-        <section className="flex flex-col gap-3 mt-4">
+        {/* <section className="flex flex-col gap-3 mt-4">
           <div className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary">
             <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-green-700">
@@ -34,7 +69,7 @@ const Home = () => {
               Inquiry
             </label>
           </div>
-        </section>
+        </section> */}
         {/* <section className="flex flex-col gap-3">
           <DashboardCards
             icon={
@@ -114,7 +149,7 @@ const Home = () => {
           />
         </section> */}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

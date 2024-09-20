@@ -23,6 +23,7 @@ const SelectCompnay = () => {
             type={"text"}
             name={"number"}
             value={"Ratlam"}
+            readonly={true}
             // inputHandler={handleUserInput}
             lengthLimit={10}
             // value={userDetails.number}

@@ -3,7 +3,7 @@ import { LabelInput } from "../../components/common/label-input";
 
 const Profile = () => {
   return (
-    <div className="p-6  pt-6 flex flex-col justify-between h-screen">
+    <div className=" flex flex-col justify-between">
       <header className="">
         <h2 className="text-[3vh] font-semibold border-b-[.2px] border-gray-400 pb-3">
           Your Profile
@@ -42,8 +42,6 @@ const Profile = () => {
           value={6}
         />
       </main>
-
-      <Footer />
     </div>
   );
 };

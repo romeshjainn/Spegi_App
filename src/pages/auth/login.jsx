@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "../../components/common/button";
 import { LabelInput } from "../../components/common/label-input";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [userDetails, setUserDetails] = useState({
-    number: "9516949156",
+    number: "",
     otp: "",
   });
 
@@ -25,6 +25,11 @@ const Login = () => {
   const handleRequestOtp = () => {
     toast.dismiss();
     toast.loading("Requesting Otp");
+
+    setTimeout(() => {
+      toast.dismiss();
+      toast.success("Otp Requested Successfully");
+    }, 2000);
     setIsRequestingOtp(true);
     setIsTimerPlaying(true);
     setIsCountdownCompleted(false);
@@ -33,6 +38,11 @@ const Login = () => {
   const handleResendOtp = () => {
     toast.dismiss();
     toast.loading("Resending Otp");
+
+    setTimeout(() => {
+      toast.dismiss();
+      toast.success("Otp Requested Successfully");
+    }, 2000);
     setIsTimerPlaying(true);
     setIsCountdownCompleted(false);
   };
@@ -52,7 +62,7 @@ const Login = () => {
           <label className="font-semibold text-[3vh]">Welcome Back</label>
           <p className="text-textSecondary mt-2">Enter your phone number</p>
         </div>
-        <div>
+        <div className="mt-3">
           <div>
             <LabelInput
               label={"Phone Number"}
@@ -74,7 +84,7 @@ const Login = () => {
 
             {/* Timer and Resend OTP */}
             {isRequestingOtp && !isCountdownCompleted && (
-              <div className="text-black mt-4 text-center grid place-items-center">
+              <div className="text-black mt-4 mb-2 text-center grid place-items-center">
                 <CountdownCircleTimer
                   isPlaying={isTimerPlaying}
                   duration={5}
@@ -96,7 +106,7 @@ const Login = () => {
 
             {/* Show Resend OTP after countdown */}
             {isCountdownCompleted && (
-              <div className="text-center mt-3">
+              <div className="text-center my-3">
                 <p
                   onClick={handleResendOtp}
                   className="font-semibold cursor-pointer"
@@ -122,7 +132,7 @@ const Login = () => {
         </div>
 
         {/* Continue Button */}
-        <div className="mt-8">
+        <div className="mt-4">
           <Button
             clickHandler={() => navigate("/select-company")}
             label={"Continue"}
