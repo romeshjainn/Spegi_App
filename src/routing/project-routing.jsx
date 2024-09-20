@@ -1,5 +1,4 @@
-import { IonReactRouter } from "@ionic/react-router";
-import { BrowserRouter as Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "../pages/auth/login";
 import Home from "../pages/home/home";
@@ -8,7 +7,7 @@ import Profile from "../pages/profile/profile";
 
 export const ProjectRouting = () => {
   return (
-    <IonReactRouter>
+    <Router>
       <Routes>
         <Route path="/" index element={<Login />} />
         <Route path="/select-company" element={<SelectCompnay />} />
@@ -16,6 +15,6 @@ export const ProjectRouting = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-    </IonReactRouter>
+    </Router>
   );
 };
