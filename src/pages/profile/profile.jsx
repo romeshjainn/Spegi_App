@@ -5,7 +5,7 @@ const Profile = () => {
   return (
     <div className=" flex flex-col justify-between">
       <header className="">
-        <h2 className="text-[3vh] font-semibold border-b-[.2px] border-gray-400 pb-3">
+        <h2 className="text-[3vh] text-center font-semibold border-b-[.2px] border-gray-400 pb-3">
           Your Profile
         </h2>
       </header>

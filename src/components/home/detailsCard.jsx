@@ -1,8 +1,12 @@
-export const DetailsCard = ({ bgColor, iconColor,label }) => {
+import { useNavigate } from "react-router-dom";
+
+export const DetailsCard = ({ bgColor, iconColor, label, navigateTo }) => {
+  const navigate = useNavigate();
   return (
     <div
       style={{ backgroundColor: bgColor ? bgColor : "#fff" }}
       className="min-h-] border-2 border-black p-[2px] rounded-[5vh] flex justify-between items-center px-2"
+      onClick={() => navigate(`/${navigateTo}`)}
     >
       <div className="bg-primary rounded-full h-16 aspect-square grid place-items-center">
         <svg

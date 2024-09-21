@@ -1,12 +1,19 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Footer = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const [locationPath, setLocationPath] = useState("");
+
+  useEffect(() => {
+    setLocationPath(location.pathname);
+  }, [location.pathname]);
   return (
-    <footer className="flex justify-between items-center text-[4vh] text-gray-600">
+    <footer className="flex justify-between fill-slate-800 items-center text-[4vh] text-gray-600">
       {" "}
-      <svg
+      {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fillRule="currentColor"
@@ -18,13 +25,14 @@ export const Footer = () => {
           d="M12 5.25c1.213 0 2.415.046 3.605.135a3.256 3.256 0 0 1 3.01 3.01c.044.583.077 1.17.1 1.759L17.03 8.47a.75.75 0 1 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l3-3a.75.75 0 0 0-1.06-1.06l-1.752 1.751c-.023-.65-.06-1.296-.108-1.939a4.756 4.756 0 0 0-4.392-4.392 49.422 49.422 0 0 0-7.436 0A4.756 4.756 0 0 0 3.89 8.282c-.017.224-.033.447-.046.672a.75.75 0 1 0 1.497.092c.013-.217.028-.434.044-.651a3.256 3.256 0 0 1 3.01-3.01c1.19-.09 2.392-.135 3.605-.135Zm-6.97 6.22a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l1.752-1.751c.023.65.06 1.296.108 1.939a4.756 4.756 0 0 0 4.392 4.392 49.413 49.413 0 0 0 7.436 0 4.756 4.756 0 0 0 4.392-4.392c.017-.223.032-.447.046-.672a.75.75 0 0 0-1.497-.092c-.013.217-.028.434-.044.651a3.256 3.256 0 0 1-3.01 3.01 47.953 47.953 0 0 1-7.21 0 3.256 3.256 0 0 1-3.01-3.01 47.759 47.759 0 0 1-.1-1.759L6.97 15.53a.75.75 0 0 0 1.06-1.06l-3-3Z"
           clipRule="evenodd"
         />
-      </svg>
+      </svg> */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fillRule="currentColor"
         className="size-10"
         onClick={() => navigate("/home")}
+        style={{ fill: locationPath == "/home" ? "#67217a" : "" }}
       >
         <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
         <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
@@ -35,6 +43,7 @@ export const Footer = () => {
         fillRule="currentColor"
         className="size-9"
         onClick={() => navigate("/profile")}
+        style={{ fill: locationPath == "/profile" ? "#67217a" : "" }}
       >
         <path
           fillRule="evenodd"
@@ -48,6 +57,7 @@ export const Footer = () => {
         fillRule="currentColor"
         className="size-10"
         onClick={() => navigate("/settings")}
+        style={{ fill: locationPath == "/settings" ? "#67217a" : "" }}
       >
         <path
           fillRule="evenodd"

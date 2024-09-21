@@ -30,7 +30,7 @@ const SelectCompnay = () => {
           />
           <LabelSelect label={"College"} options={CollegeData} />
           <div className="flex items-center gap-3 justify-end mt-4 text-[2.5vh]">
-            <label className="flex items-center space-x-2 cursor-pointer">
+            <div className="flex items-center space-x-2 cursor-pointer">
               <input type="checkbox" className="hidden peer" />
 
               <div className="w-6 h-6 bg-white border-2 border-gray-400 rounded-md flex items-center justify-center peer-checked:border-blue-500 peer-checked:bg-blue-500">
@@ -51,7 +51,7 @@ const SelectCompnay = () => {
               </div>
 
               <span className="text-gray-700">Set as default</span>
-            </label>
+            </div>
           </div>
         </div>
         <div className="mt-8">

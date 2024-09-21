@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import { DetailsCard } from "../../components/home/detailsCard";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className=" flex flex-col justify-between">
       <main className="h-full">
@@ -13,7 +15,7 @@ const Home = () => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="size-8 text-gray-800"
+            className="size-8 text-primary"
           >
             <path
               fillRule="evenodd"
@@ -28,48 +30,60 @@ const Home = () => {
           </h2>
         </div>
 
-        <section className="flex flex-col gap-5 mt-4 h-full">
-          <DetailsCard navigateTo="/income" label={"Income"} bgColor={""} />
+        {/* <section className="flex flex-col gap-5 mt-4 h-full">
+          <DetailsCard navigateTo="income" label={"Income"} bgColor={""} />
           <DetailsCard
-            navigateTo="/expense"
+            navigateTo="expense"
             label={"Expense"}
             bgColor={""}
             iconColor={"red"}
           />
-          <DetailsCard navigateTo="/enquiry" label={"Enquiry"} bgColor={""} />
+          <DetailsCard navigateTo="enquiry" label={"Enquiry"} bgColor={""} />
           <DetailsCard
-            navigateTo="/admissions"
+            navigateTo="admissions"
             label={"Admissions"}
             bgColor={""}
           />
-        </section>
+        </section> */}
 
-        {/* <section className="flex flex-col gap-3 mt-4">
-          <div className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary">
+        <section className="flex flex-col gap-3 mt-4">
+          <div
+            onClick={() => navigate("/income")}
+            className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary"
+          >
             <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-green-700">
               Income
             </label>
           </div>
-          <div className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary">
+          <div
+            onClick={() => navigate("/expense")}
+            className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary"
+          >
             <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-red-700">
               Expenses
             </label>
           </div>
-          <div className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary">
+          <div
+            onClick={() => navigate("/admissions")}
+            className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary"
+          >
             <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-blue-700">
               Admission
             </label>
           </div>
-          <div className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary">
+          <div
+            onClick={() => navigate("/enquiry")}
+            className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary"
+          >
             <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-purple-700">
               Inquiry
             </label>
           </div>
-        </section> */}
+        </section>
         {/* <section className="flex flex-col gap-3">
           <DashboardCards
             icon={
