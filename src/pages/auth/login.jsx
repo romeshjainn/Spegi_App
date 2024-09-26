@@ -4,47 +4,86 @@ import { LabelInput } from "../../components/common/label-input";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { requestMobileOtp, verifyMobileOtp } from "../../api/api";
 
 const Login = () => {
   const [userDetails, setUserDetails] = useState({
-    number: "",
+    number: "8839248138",
     otp: "",
   });
 
   const [isRequestingOtp, setIsRequestingOtp] = useState(false);
   const [isCountdownCompleted, setIsCountdownCompleted] = useState(false);
   const [isTimerPlaying, setIsTimerPlaying] = useState(false);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const [otpOrderId, setOtpOrderId] = useState("");
 
   const navigate = useNavigate();
+
+  const handleStateStatus = (
+    requestingOtp,
+    timerRunning,
+    countdownCompleted
+  ) => {
+    if (requestingOtp !== null) {
+      setIsRequestingOtp(requestingOtp);
+    }
+    if (requestingOtp !== null) {
+      setIsTimerPlaying(timerRunning);
+    }
+    if (requestingOtp !== null) {
+      setIsCountdownCompleted(countdownCompleted);
+    }
+  };
 
   const handleUserInput = (e) => {
     const { name, value } = e.target;
     setUserDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleRequestOtp = () => {
+  const handleRequestOtp = async () => {
     toast.dismiss();
     toast.loading("Requesting Otp");
+    try {
+      handleStateStatus(true, true, false);
+      const phoneNumber = userDetails.number;
+      const data = await requestMobileOtp(phoneNumber);
 
-    setTimeout(() => {
       toast.dismiss();
-      toast.success("Otp Requested Successfully");
-    }, 2000);
-    setIsRequestingOtp(true);
-    setIsTimerPlaying(true);
-    setIsCountdownCompleted(false);
+      if (data?.success) {
+        setOtpOrderId(data?.orderId);
+        toast.success(data?.message);
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleResendOtp = () => {
+  const handleOtpVerification = async () => {
     toast.dismiss();
-    toast.loading("Resending Otp");
-
-    setTimeout(() => {
+    toast.loading("Requesting Otp");
+    try {
+      const data = await verifyMobileOtp(
+        userDetails.number,
+        otpOrderId,
+        userDetails.otp
+      );
       toast.dismiss();
-      toast.success("Otp Requested Successfully");
-    }, 2000);
-    setIsTimerPlaying(true);
-    setIsCountdownCompleted(false);
+      if (data?.success) {
+        localStorage.setItem("token", data?.userId);
+        localStorage.setItem("mobileNumber", userDetails.number);
+        localStorage.setItem("dbName", userDetails.dbName);
+        setIsOtpVerified(true);
+        toast.success(data?.message);
+        navigate("/select-company");
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCountdownComplete = () => {
@@ -72,15 +111,18 @@ const Login = () => {
               inputHandler={handleUserInput}
               lengthLimit={10}
               value={userDetails.number}
+              readonly={otpOrderId.length}
             />
-            {userDetails?.number.length === 10 && !isRequestingOtp && (
-              <p
-                onClick={handleRequestOtp}
-                className="text-center mt-3 font-semibold cursor-pointer"
-              >
-                Request OTP
-              </p>
-            )}
+            {userDetails?.number.length === 10 &&
+              !isRequestingOtp &&
+              !isOtpVerified && (
+                <p
+                  onClick={handleRequestOtp}
+                  className="text-center mt-3 font-semibold cursor-pointer"
+                >
+                  Request OTP
+                </p>
+              )}
 
             {/* Timer and Resend OTP */}
             {isRequestingOtp && !isCountdownCompleted && (
@@ -107,12 +149,7 @@ const Login = () => {
             {/* Show Resend OTP after countdown */}
             {isCountdownCompleted && (
               <div className="text-center my-3">
-                <p
-                  onClick={handleResendOtp}
-                  className="font-semibold cursor-pointer"
-                >
-                  Resend OTP
-                </p>
+                <p className="font-semibold cursor-pointer">Resend OTP</p>
               </div>
             )}
           </div>
@@ -123,9 +160,8 @@ const Login = () => {
               label={"One Time Password"}
               type={"number"}
               name={"otp"}
-              placeholder={"0 0 0 0 0 0"}
               inputHandler={handleUserInput}
-              lengthLimit={6}
+              lengthLimit={4}
               value={userDetails.otp}
             />
           )}
@@ -133,11 +169,16 @@ const Login = () => {
 
         {/* Continue Button */}
         <div className="mt-4">
-          <Button
-            clickHandler={() => navigate("/select-company")}
-            label={"Continue"}
-            // isClicked={isRequestingOtp}
-          />
+          <button
+            onClick={() =>
+              userDetails.otp.length == 4
+                ? handleOtpVerification()
+                : toast.error("Enter otp")
+            }
+            className="bg-primary w-full text-white rounded-xl p-3 font-semibold"
+          >
+            Continue
+          </button>
           <p
             onClick={() => navigate("/forgot-password")}
             className="text-center mt-4 text-blue-700"
