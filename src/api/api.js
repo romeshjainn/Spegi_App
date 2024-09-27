@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// const backendUrl = "http://localhost:3034/api/user";
-const backendUrl = " https://5c11-223-236-51-234.ngrok-free.app/api/user";
+const backendUrl = "http://localhost:3034/api/user";
 
 export const requestMobileOtp = async (phoneNumber) => {
   try {
@@ -63,6 +62,32 @@ export const getCollegeGroupName = async (dbName, mobileNumber) => {
       params: {
         dbName,
         mobileNumber,
+      },
+    });
+
+    // Ensure backend sends `dbName` and `message` in the response
+    if (response.data.success) {
+      return response.data.data;
+    } else {
+      return {
+        success: false,
+        message: response.data.message,
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching college group name:", error);
+    return {
+      success: false,
+      message: "Failed to fetch college group name",
+    };
+  }
+};
+
+export const getDashboardRecords = async (db_name) => {
+  try {
+    const response = await axios.get(`${backendUrl}/get-dashboard-data`, {
+      params: {
+        db_name,
       },
     });
 

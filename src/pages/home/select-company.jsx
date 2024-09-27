@@ -13,28 +13,22 @@ const SelectCompnay = () => {
   const [isDefault, setIsDefault] = useState(false);
 
   const getData = async () => {
-    toast.dismiss(); // Clear any existing toasts
-    const loadingToast = toast.loading("Fetching Data..."); // Show loading toast
-
+    toast.dismiss();
+    toast.loading("Fetching Data");
     try {
       const data = await getCollegeGroupName("MasterDatabase", "8839248138");
-
+      toast.dismiss();
       if (data) {
         setData(data);
-        toast.dismiss(loadingToast);
-      } else {
-        toast.error("No data found");
       }
     } catch (error) {
-      toast.error("Error fetching data");
-      console.error(error);
-    } finally {
-      toast.dismiss(loadingToast);
+      toast.dismiss();
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    getData(); // Fetch data on component mount
+    getData();
   }, []);
 
   const handleCollegeChange = (e) => {

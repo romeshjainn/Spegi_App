@@ -1,8 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { DetailsCard } from "../../components/home/detailsCard";
+import { useEffect } from "react";
+import { getDashboardRecords } from "../../api/api";
 
 const Home = () => {
   const navigate = useNavigate();
+
+  const getCardsData = async () => {
+    try {
+      const collegeDbName = localStorage.getItem("collegeDbName");
+      const data = await getDashboardRecords(collegeDbName);
+      console.log(data, "data");
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+  useEffect(() => {
+    getCardsData();
+  }, []);
   return (
     <div className=" flex flex-col justify-between">
       <main className="h-full">

@@ -30,7 +30,7 @@ const RedirectHandler = () => {
 
     console.log(window.history);
     if (isLoggedIn && isLoggedIn !== "undefined") {
-      isDefault === "true" ? navigate("/home") : navigate("/switch-college");
+      isDefault === "true" ? navigate("/home") : navigate("/select-company");
     } else {
       navigate("/login");
     }
