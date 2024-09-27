@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const backendUrl = "http://localhost:3034/api/user";
+// const backendUrl = "http://localhost:3034/api/user";
+const backendUrl = " https://5c11-223-236-51-234.ngrok-free.app/api/user";
 
 export const requestMobileOtp = async (phoneNumber) => {
   try {

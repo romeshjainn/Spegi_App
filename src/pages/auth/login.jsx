@@ -48,9 +48,10 @@ const Login = () => {
       handleStateStatus(true, true, false);
       const phoneNumber = userDetails.number;
       const data = await requestMobileOtp(phoneNumber);
-
+      console.log(data, "data");
       toast.dismiss();
       if (data?.success) {
+        localStorage.setItem("dbName", data?.dbName);
         setOtpOrderId(data?.orderId);
         toast.success(data?.message);
       } else {
@@ -73,8 +74,7 @@ const Login = () => {
       toast.dismiss();
       if (data?.success) {
         localStorage.setItem("token", data?.userId);
-        localStorage.setItem("mobileNumber", userDetails.number);
-        localStorage.setItem("dbName", userDetails.dbName);
+        localStorage.setItem("mobileNumber", userDetails?.number);
         setIsOtpVerified(true);
         toast.success(data?.message);
         navigate("/select-company");
@@ -170,17 +170,18 @@ const Login = () => {
         {/* Continue Button */}
         <div className="mt-4">
           <button
-            onClick={() =>
-              userDetails.otp.length == 4
-                ? handleOtpVerification()
-                : toast.error("Enter otp")
-            }
+            // onClick={() =>
+            //   userDetails.otp.length == 4
+            //     ? handleOtpVerification()
+            //     : toast.error("Enter otp")
+            // }
+            onClick={()=>navigate("/home")}
             className="bg-primary w-full text-white rounded-xl p-3 font-semibold"
           >
             Continue
           </button>
           <p
-            onClick={() => navigate("/forgot-password")}
+            onClick={() => navigate("/home")}
             className="text-center mt-4 text-blue-700"
           >
             Forgot password?

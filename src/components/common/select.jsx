@@ -24,11 +24,12 @@ export const LabelSelect = ({
         // console.log("Selected Key:", selectedKey);
       >
         <option value="">Select {label}</option>
-        {options.map((item, index) => (
-          <option key={index} value={item[valueKey]}>
-            {item[nameKey]}
-          </option>
-        ))}
+        {options.length &&
+          options?.map((item, index) => (
+            <option key={index} value={item[valueKey]}>
+              {item[nameKey]}
+            </option>
+          ))}
       </select>
     </div>
   );

@@ -50,7 +50,10 @@ const Setting = () => {
       </div>
       <footer>
         <button
-          onClick={() => navigate("/help")}
+          onClick={() => {
+            localStorage.clear();
+            navigate("/");
+          }}
           className="flex items-center gap-3 justify-center rounded-xl text-[2.5vh] bg-primary text-white text-center border-2 border-gray-300 w-full font-semibold p-2"
         >
           Logout
