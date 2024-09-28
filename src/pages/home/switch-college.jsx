@@ -44,10 +44,6 @@ const SwitchCollege = () => {
       const collegeName = data[selectedCollegeIndex]?.College_Name;
       const collegeServerName = data[selectedCollegeIndex]?.ServerName;
       const collegeDbName = data[selectedCollegeIndex]?.DBName;
-      console.log(data[selectedCollegeIndex], "data[selectedCollegeIndex]");
-      console.log(collegeName, "collegeDbName");
-      console.log(collegeServerName, "collegeServerName");
-      console.log(collegeDbName, "collegeDbName");
 
       localStorage.setItem("isDefaultCollege", isDefault);
       localStorage.setItem("defaultCollegeName", collegeName);

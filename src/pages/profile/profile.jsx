@@ -1,7 +1,15 @@
+import { useEffect, useState } from "react";
 import { Footer } from "../../components/common/footer";
 import { LabelInput } from "../../components/common/label-input";
 
 const Profile = () => {
+  const [data, setData] = useState({
+    name: "Romesh Jain",
+    mobileNumber: localStorage.getItem("mobileNumber"),
+    groupName: localStorage.getItem("groupName"),
+    noOfColleges: "10",
+  });
+  useEffect(() => {}, []);
   return (
     <div className=" flex flex-col justify-between">
       <header className="">
@@ -14,32 +22,29 @@ const Profile = () => {
           label={"Name"}
           type={"text"}
           name={"name"}
-          placeholder={"+91 9999999999"}
           lengthLimit={10}
-          value={"Romesh Jain"}
+          value={data.name}
         />
         <LabelInput
           label={"Number"}
           type={"text"}
           name={"name"}
           lengthLimit={10}
-          value={"+91 9516949156"}
+          value={data.mobileNumber}
         />
         <LabelInput
           label={"Group Name"}
           type={"text"}
           name={"name"}
-          placeholder={"+91 9999999999"}
           lengthLimit={10}
-          value={"Romesh Jain"}
+          value={data.groupName}
         />
         <LabelInput
-          label={"Colleges Count"}
+          label={"No. Of Colleges"}
           type={"number"}
           name={"number"}
-          placeholder={"+91 9999999999"}
           lengthLimit={10}
-          value={6}
+          value={data.noOfColleges}
         />
       </main>
     </div>

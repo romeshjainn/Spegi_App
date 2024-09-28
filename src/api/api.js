@@ -85,26 +85,64 @@ export const getCollegeGroupName = async (dbName, mobileNumber) => {
 
 export const getDashboardRecords = async (db_name) => {
   try {
-    const response = await axios.get(`${backendUrl}/get-dashboard-data`, {
-      params: {
-        db_name,
-      },
-    });
-
-    // Ensure backend sends `dbName` and `message` in the response
-    if (response.data.success) {
-      return response.data.data;
-    } else {
-      return {
-        success: false,
-        message: response.data.message,
-      };
-    }
+    const response = await fetch(
+      `${backendUrl}/get-dashboard-data?db_name=${db_name}`
+    );
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error("Error fetching college group name:", error);
-    return {
-      success: false,
-      message: "Failed to fetch college group name",
-    };
+    console.log(error);
+  }
+};
+
+export const getEnquiryPageData = async (db_name, dateRange) => {
+  try {
+    console.log(dateRange);
+    const response = await fetch(
+      `${backendUrl}/get-enquiry-page-data?db_name=${db_name}&start_date=${dateRange.startDate}&end_date=${dateRange.endDate}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getIncomePageData = async (db_name, dateRange) => {
+  try {
+    console.log(dateRange);
+    const response = await fetch(
+      `${backendUrl}/get-income-page-data?db_name=${db_name}&start_date=${dateRange.startDate}&end_date=${dateRange.endDate}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getExpensePageData = async (db_name, dateRange) => {
+  try {
+    console.log(dateRange);
+    const response = await fetch(
+      `${backendUrl}/get-expense-page-data?db_name=${db_name}&start_date=${dateRange.startDate}&end_date=${dateRange.endDate}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAdmissionPageData = async (db_name, dateRange) => {
+  try {
+    console.log(dateRange);
+    const response = await fetch(
+      `${backendUrl}/get-admission-page-data?db_name=${db_name}&start_date=${dateRange.startDate}&end_date=${dateRange.endDate}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 };

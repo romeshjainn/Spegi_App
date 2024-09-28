@@ -1,16 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import { DetailsCard } from "../../components/home/detailsCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getDashboardRecords } from "../../api/api";
+import { TransformCardData } from "../../utils/transformDashboardData";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [cardsData, setCardsData] = useState({
+    todayIncome: 0,
+    todayExpenses: 0,
+    totalEnquiries: 0,
+    todayAdmissions: 0,
+  });
 
   const getCardsData = async () => {
+    toast.dismiss();
+    toast.loading("Fetching Data");
     try {
       const collegeDbName = localStorage.getItem("collegeDbName");
       const data = await getDashboardRecords(collegeDbName);
-      console.log(data, "data");
+
+      toast.dismiss();
+      if (data.success) {
+        const cardData = TransformCardData(data?.data);
+        toast.success("Data Fetched");
+        setCardsData((prev) => ({ ...prev, ...cardData }));
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
       console.log(error, "error");
     }
@@ -41,7 +59,8 @@ const Home = () => {
         </section>
         <div className="mb-6 mt-2 px-4 p-2 flex items-center justify-center border-y-[.1111px] min-h-[100px] rounded-xl bg-primary border-gray-700 py-3">
           <h2 className="text-[2.4vh] text-start text-white font-semibold">
-            Rk College Of Technologies & Management
+            {localStorage.getItem("defaultCollegeName") ||
+              "No College Selected"}
           </h2>
         </div>
 
@@ -66,7 +85,9 @@ const Home = () => {
             onClick={() => navigate("/income")}
             className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary"
           >
-            <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
+            <h2 className="text-[2.9vh] text-black font-bold">
+              ₹ {cardsData.todayIncome}
+            </h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-green-700">
               Income
             </label>
@@ -75,7 +96,9 @@ const Home = () => {
             onClick={() => navigate("/expense")}
             className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary"
           >
-            <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
+            <h2 className="text-[2.9vh] text-black font-bold">
+              ₹ {cardsData.todayExpenses}
+            </h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-red-700">
               Expenses
             </label>
@@ -84,7 +107,9 @@ const Home = () => {
             onClick={() => navigate("/admissions")}
             className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary"
           >
-            <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
+            <h2 className="text-[2.9vh] text-black font-bold">
+              {cardsData.todayAdmissions}
+            </h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-blue-700">
               Admission
             </label>
@@ -93,9 +118,11 @@ const Home = () => {
             onClick={() => navigate("/enquiry")}
             className="rounded-xl h-[60px] p-3 py-8 flex justify-between items-center border-2 border-primary"
           >
-            <h2 className="text-[2.9vh] text-gray-700 font-bold">₹ 2,00,000</h2>
+            <h2 className="text-[2.9vh] text-black font-bold">
+              {cardsData.totalEnquiries}
+            </h2>
             <label className="font-medium text-[2.4vh] w-[40%] text-center text-secondary px-2 rounded-xl bg-purple-700">
-              Inquiry
+              Enquiry
             </label>
           </div>
         </section>

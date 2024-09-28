@@ -16,9 +16,11 @@ const SelectCompnay = () => {
     toast.dismiss();
     toast.loading("Fetching Data");
     try {
-      const data = await getCollegeGroupName("MasterDatabase", "8839248138");
+      const mobileNumber = localStorage.getItem("mobileNumber");
+      const data = await getCollegeGroupName("MasterDatabase", mobileNumber);
       toast.dismiss();
       if (data) {
+        localStorage.setItem("groupName", data[0]?.CollegeGroup);
         setData(data);
       }
     } catch (error) {
