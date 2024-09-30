@@ -18,16 +18,21 @@ const Home = () => {
     toast.dismiss();
     toast.loading("Fetching Data");
     try {
-      const collegeDbName = localStorage.getItem("collegeDbName");
+      const collegeDbName =
+        localStorage.getItem("collegeDbName") || "SPEGIEDUCATIONERP_BARWANI";
       const data = await getDashboardRecords(collegeDbName);
 
       toast.dismiss();
-      if (data.success) {
+      if (data?.success) {
         const cardData = TransformCardData(data?.data);
+        console.log(cardData, "cardData");
         toast.success("Data Fetched");
         setCardsData((prev) => ({ ...prev, ...cardData }));
       } else {
-        toast.error(data.message);
+        const message = data?.message?.length
+          ? data?.message
+          : "Please try again !";
+        toast.error(message);
       }
     } catch (error) {
       console.log(error, "error");
@@ -36,6 +41,11 @@ const Home = () => {
   useEffect(() => {
     getCardsData();
   }, []);
+
+  useEffect(() => {
+    console.log(cardsData, "cardsData");
+  }, [cardsData]);
+
   return (
     <div className=" flex flex-col justify-between">
       <main className="h-full">
@@ -49,6 +59,10 @@ const Home = () => {
             viewBox="0 0 24 24"
             fill="currentColor"
             className="size-8 text-primary"
+            onClick={() => {
+              toast.dismiss();
+              toast("Notifications Coming Soon...");
+            }}
           >
             <path
               fillRule="evenodd"

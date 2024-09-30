@@ -15,13 +15,8 @@ export const LabelSelect = ({
         className="rounded-xl border border-primary font-semibold p-4"
         type={type}
         name={name}
-        // onChange={(e) => handleSelect(e.target.value)}
-        defaultValue={value}
+        value={value}
         onChange={(e) => handleSelect(e)}
-        // const selectedIndex = e.target.selectedIndex - 1; // Adjust for "Select" option
-        // const selectedKey = options[selectedIndex]?.[valueKey];
-        // console.log("Selected Index:", selectedIndex);
-        // console.log("Selected Key:", selectedKey);
       >
         <option value="">Select {label}</option>
         {options.length &&

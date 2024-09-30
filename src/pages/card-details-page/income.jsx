@@ -3,6 +3,7 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { formatDatesObject } from "../../utils/formatDatePickerDate";
 import { getIncomePageData } from "../../api/api";
 import toast from "react-hot-toast";
+import { toWords } from "../../utils/toWords";
 
 export const IncomePage = () => {
   const currentDate = new Date();
@@ -42,6 +43,7 @@ export const IncomePage = () => {
     const dateRange = formatDatesObject(value);
     fetchData(dateRange);
   }, [value]);
+
   return (
     <div className="bg-primary h-screen flex flex-col justify-between">
       <section className="grid place-items-center h-full">
@@ -71,31 +73,10 @@ export const IncomePage = () => {
               }
             />
           </div>
+        </div>
 
-          {/* <div className="mt-3 max-h-[50vh] flex flex-col gap-3 py-x3 overflow-scroll ">
-            {incomeData?.length ? (
-              incomeData.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex gap-2 border-2 border-black rounded-md"
-                  >
-                    <p className="w-1/2 text-start p-2 font-semibold">
-                      {item?.COURSE_NAME}
-                    </p>
-                    <p className="w-1/2 text-start p-2">
-                      {item?.TOTALENQUIRIES}
-                    </p>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="flex flex-col justify-center items-center min-h-[40vh] text-primary font-semibold text-[3.2vh]">
-                No Data Available
-                <span className="text-[2.3vh]">Between The Selected Dates</span>
-              </div>
-            )}
-          </div> */}
+        <div className="mt-4 font-semibold">
+          {toWords.convert(parseFloat(incomeData))}
         </div>
       </section>
     </div>

@@ -3,14 +3,14 @@ import { App } from "@capacitor/app";
 
 const useBackButtonHandler = () => {
   useEffect(() => {
-    const handleBackButton = () => {
+    const handleBackButton = async () => {
       if (
         window.location.pathname == "/home" ||
         window.location.pathname == "/login" ||
-        window.location.pathname == "/switch-college"
+        window.location.pathname == "/select-company"
       ) {
-        console.log(window.location.pathname);
-        App.exitApp();
+        console.log(window.location.pathname, "location.pathname");
+        await App.exitApp();
       } else {
         window.history.back();
       }

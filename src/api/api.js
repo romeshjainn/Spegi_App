@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const backendUrl = "http://localhost:3034/api/user";
+// const backendUrl = "https://spegiappbackend.onrender.com/api/user";
 
 export const requestMobileOtp = async (phoneNumber) => {
   try {
@@ -65,9 +66,9 @@ export const getCollegeGroupName = async (dbName, mobileNumber) => {
       },
     });
 
-    // Ensure backend sends `dbName` and `message` in the response
-    if (response.data.success) {
-      return response.data.data;
+    if (!response.ok) {
+      // Check if response is ok
+      return response.data.data; // Adjust for axios, as axios resolves on success status
     } else {
       return {
         success: false,
@@ -88,61 +89,87 @@ export const getDashboardRecords = async (db_name) => {
     const response = await fetch(
       `${backendUrl}/get-dashboard-data?db_name=${db_name}`
     );
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status: ${response.status}`);
+    }
+
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching dashboard records:", error);
+    return { success: false, error: error.message };
   }
 };
 
 export const getEnquiryPageData = async (db_name, dateRange) => {
   try {
-    console.log(dateRange);
     const response = await fetch(
       `${backendUrl}/get-enquiry-page-data?db_name=${db_name}&start_date=${dateRange.startDate}&end_date=${dateRange.endDate}`
     );
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status: ${response.status}`);
+    }
+
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching enquiry page data:", error);
+    return { success: false, error: error.message };
   }
 };
 
 export const getIncomePageData = async (db_name, dateRange) => {
   try {
-    console.log(dateRange);
     const response = await fetch(
       `${backendUrl}/get-income-page-data?db_name=${db_name}&start_date=${dateRange.startDate}&end_date=${dateRange.endDate}`
     );
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status: ${response.status}`);
+    }
+
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching income page data:", error);
+    return { success: false, error: error.message };
   }
 };
 
 export const getExpensePageData = async (db_name, dateRange) => {
   try {
-    console.log(dateRange);
     const response = await fetch(
       `${backendUrl}/get-expense-page-data?db_name=${db_name}&start_date=${dateRange.startDate}&end_date=${dateRange.endDate}`
     );
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status: ${response.status}`);
+    }
+
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching expense page data:", error);
+    return { success: false, error: error.message };
   }
 };
 
 export const getAdmissionPageData = async (db_name, dateRange) => {
   try {
-    console.log(dateRange);
     const response = await fetch(
       `${backendUrl}/get-admission-page-data?db_name=${db_name}&start_date=${dateRange.startDate}&end_date=${dateRange.endDate}`
     );
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status: ${response.status}`);
+    }
+
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching admission page data:", error);
+    return { success: false, error: error.message };
   }
 };

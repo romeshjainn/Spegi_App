@@ -1,26 +1,38 @@
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { LabelInput } from "../../components/common/label-input";
 import { LabelSelect } from "../../components/common/select";
 import { getCollegeGroupName } from "../../api/api";
-import { useEffect, useState } from "react";
 
 const SwitchCollege = () => {
   const [data, setData] = useState([]);
   const [selectedCollegeIndex, setSelectedCollegeIndex] = useState(-1);
-  const [isDefault, setIsDefault] = useState(false);
+  const [defaultSelectedCollege, setDefaultSelectedCollege] = useState("");
+
+  const [isDefault, setIsDefault] = useState(
+    localStorage.getItem("isDefaultCollege") === "true"
+  );
 
   const getData = async () => {
     toast.dismiss();
     toast.loading("Fetching Data");
     try {
-      const data = await getCollegeGroupName("MasterDatabase", "8839248138");
+      const dbName = localStorage.getItem("dbName");
+      const mobileNumber = localStorage.getItem("mobileNumber");
+      const fetchedData = await getCollegeGroupName(dbName, mobileNumber);
       toast.dismiss();
-      if (data) {
-        setData(data);
+      if (fetchedData) {
+        setData(fetchedData);
+        const defaultCollege = localStorage.getItem("collegeDbName") || "";
+        const defaultCollegeIndex = fetchedData?.findIndex(
+          (college) => college?.DBName === defaultCollege
+        );
+        setSelectedCollegeIndex(defaultCollegeIndex);
+        setDefaultSelectedCollege(defaultCollege);
       }
     } catch (error) {
       toast.dismiss();
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -29,8 +41,18 @@ const SwitchCollege = () => {
   }, []);
 
   const handleCollegeChange = (e) => {
-    const collegeIndex = e.target.selectedIndex - 1;
-    setSelectedCollegeIndex(collegeIndex);
+    const collegeServerName = e.target.value;
+    console.log(collegeServerName, "collegeServerName");
+    setDefaultSelectedCollege(collegeServerName);
+
+    const collegeIndex = data.findIndex(
+      (item) => item.DBName === collegeServerName
+    );
+    if (collegeIndex !== -1) {
+      setSelectedCollegeIndex(collegeIndex);
+    } else {
+      setSelectedCollegeIndex(-1);
+    }
   };
 
   const handleCheckboxChange = () => {
@@ -38,24 +60,29 @@ const SwitchCollege = () => {
   };
 
   const handleContinue = () => {
-    if (selectedCollegeIndex == -1) {
+    if (selectedCollegeIndex === -1) {
       toast.error("Please select a college");
-    } else {
-      const collegeName = data[selectedCollegeIndex]?.College_Name;
-      const collegeServerName = data[selectedCollegeIndex]?.ServerName;
-      const collegeDbName = data[selectedCollegeIndex]?.DBName;
-
-      localStorage.setItem("isDefaultCollege", isDefault);
-      localStorage.setItem("defaultCollegeName", collegeName);
-      localStorage.setItem("defaultCollegeServerName", collegeServerName);
-      localStorage.setItem("collegeDbName", collegeDbName);
-      toast.success("Saved");
+      return;
     }
+
+    const collegeName = data[selectedCollegeIndex]?.College_Name;
+    const collegeServerName = data[selectedCollegeIndex]?.ServerName;
+    const collegeDbName = data[selectedCollegeIndex]?.DBName;
+
+    localStorage.setItem("isDefaultCollege", isDefault);
+    localStorage.setItem("defaultCollegeName", collegeName);
+    localStorage.setItem("defaultCollegeServerName", collegeServerName);
+    localStorage.setItem("collegeDbName", collegeDbName);
+    toast.success("Saved");
   };
+
+  useEffect(() => {
+    console.log(defaultSelectedCollege);
+  }, [defaultSelectedCollege]);
 
   return (
     <div className="mb-6 h-[85vh] flex flex-col justify-between">
-      <header className="">
+      <header>
         <h2 className="text-[3vh] text-center font-semibold border-b-[.2px] border-gray-400 pb-3">
           Switch College
         </h2>
@@ -74,8 +101,8 @@ const SwitchCollege = () => {
           label={"College"}
           options={data}
           nameKey={"College_Name"}
-          valueKey={"ServerName"}
-          value={data[selectedCollegeIndex]?.ServerName}
+          valueKey={"DBName"}
+          value={defaultSelectedCollege}
           handleSelect={handleCollegeChange}
         />
 
@@ -140,4 +167,5 @@ const SwitchCollege = () => {
     </div>
   );
 };
+
 export default SwitchCollege;

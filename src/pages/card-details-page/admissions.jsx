@@ -32,7 +32,7 @@ export const AdmissionsPage = () => {
 
       toast.dismiss();
       if (data?.success) {
-        setAdmissionData(data?.admissionData[0].AdmissionData);
+        setAdmissionData(data?.admissionData[0]?.AdmissionData);
       }
     } catch (error) {
       console.log(error);

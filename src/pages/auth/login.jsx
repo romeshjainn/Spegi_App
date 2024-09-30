@@ -55,7 +55,10 @@ const Login = () => {
         setOtpOrderId(data?.orderId);
         toast.success(data?.message);
       } else {
-        toast.error(data?.message);
+        const message = data?.message?.length
+          ? data?.message
+          : "Please try again !";
+        toast.error(message);
       }
     } catch (error) {
       console.log(error);
@@ -64,7 +67,7 @@ const Login = () => {
 
   const handleOtpVerification = async () => {
     toast.dismiss();
-    toast.loading("Requesting Otp");
+    toast.loading("Verifying Otp");
     try {
       const data = await verifyMobileOtp(
         userDetails.number,
@@ -74,7 +77,7 @@ const Login = () => {
       toast.dismiss();
       if (data?.success) {
         localStorage.setItem("token", data?.userId);
-        localStorage.setItem("mobileNumber", userDetails?.number);
+        localStorage.setItem("mobileNumber", data?.mobileNumber);
         setIsOtpVerified(true);
         toast.success(data?.message);
         navigate("/select-company");
@@ -149,7 +152,12 @@ const Login = () => {
             {/* Show Resend OTP after countdown */}
             {isCountdownCompleted && (
               <div className="text-center my-3">
-                <p className="font-semibold cursor-pointer">Resend OTP</p>
+                <p
+                  onClick={handleRequestOtp}
+                  className="font-semibold cursor-pointer "
+                >
+                  Resend OTP
+                </p>
               </div>
             )}
           </div>
@@ -170,22 +178,21 @@ const Login = () => {
         {/* Continue Button */}
         <div className="mt-4">
           <button
-            // onClick={() =>
-            //   userDetails.otp.length == 4
-            //     ? handleOtpVerification()
-            //     : toast.error("Enter otp")
-            // }
-            onClick={()=>navigate("/home")}
+            onClick={() =>
+              userDetails.otp.length == 4
+                ? handleOtpVerification()
+                : toast.error("Verify mobile number")
+            }
             className="bg-primary w-full text-white rounded-xl p-3 font-semibold"
           >
             Continue
           </button>
-          <p
+          {/* <p
             onClick={() => navigate("/home")}
             className="text-center mt-4 text-blue-700"
           >
             Forgot password?
-          </p>
+          </p> */}
         </div>
       </section>
     </div>
