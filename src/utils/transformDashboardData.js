@@ -1,11 +1,3 @@
-const data = {
-  todayEnquires: [
-    {
-      TOTALENQUIRIES: 2,
-      COURSE_NAME: "BSC NURSNIG",
-    },
-  ],
-};
 export const TransformCardData = (data) => {
   const totalEnquiries =
     data?.todayEnquires?.reduce((acc, item) => {

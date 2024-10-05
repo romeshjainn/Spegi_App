@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { DetailsCard } from "../../components/home/detailsCard";
 import { useEffect, useState } from "react";
 import { getDashboardRecords } from "../../api/api";
 import { TransformCardData } from "../../utils/transformDashboardData";
